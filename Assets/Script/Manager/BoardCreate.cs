@@ -6,8 +6,11 @@ public class BoardCreate : MonoBehaviour
     [SerializeField] private int width = 5;  
     [SerializeField] private int height = 5; 
     [SerializeField] private GameObject blackBoardPrefab; 
-    [SerializeField] private GameObject writeBoardPrefab;
+    [SerializeField] private GameObject whiteBoardPrefab;
+    [SerializeField] private Transform boardHolder;
+    [SerializeField] private Transform pieceHolder;
     [SerializeField] private float offset = 122f;
+    [SerializeField] private GameObject[] piecePrefabs;
 
     private void Start()
     {
@@ -16,8 +19,8 @@ public class BoardCreate : MonoBehaviour
 
     private void GenerateChessboard()
     {
-        float xOffset = (width % 2 == 0) ? offset/2 : 0f;
-        float yOffset = (height % 2 == 0) ? offset/2 : 0f;
+        float xOffset = (width % 2 == 0) ? offset / 2 : 0f;
+        float yOffset = (height % 2 == 0) ? offset / 2 : 0f;
         
         int centerX = width / 2;
         int centerY = height / 2;
@@ -28,14 +31,25 @@ public class BoardCreate : MonoBehaviour
             {
                 float posX = (x - centerX) * offset + xOffset;
                 float posY = (y - centerY) * offset + yOffset;
-
-                GameObject newPiece = null;
-                newPiece = Instantiate((x + y) %2 == 0 ? writeBoardPrefab : blackBoardPrefab, Vector3.zero, Quaternion.identity, this.transform);
-
-                RectTransform rectTransform = newPiece.GetComponent<RectTransform>();
-                if (rectTransform != null)
+                
+                GameObject boardPiece = (x + y) % 2 == 0 ? whiteBoardPrefab : blackBoardPrefab;
+                GameObject newBoardPiece = Instantiate(boardPiece, Vector3.zero, Quaternion.identity, boardHolder);
+                
+                RectTransform boardRectTransform = newBoardPiece.GetComponent<RectTransform>();
+                if (boardRectTransform != null)
                 {
-                    rectTransform.anchoredPosition = new Vector2(posX, posY);
+                    boardRectTransform.anchoredPosition = new Vector2(posX, posY);
+                }
+                
+                if (piecePrefabs.Length > 0)
+                {
+                    GameObject randomPiece = Instantiate(piecePrefabs[Random.Range(0, piecePrefabs.Length)], Vector3.zero, Quaternion.identity, pieceHolder);
+                    
+                    RectTransform pieceRectTransform = randomPiece.GetComponent<RectTransform>();
+                    if (pieceRectTransform != null)
+                    {
+                        pieceRectTransform.anchoredPosition = new Vector2(posX, posY);
+                    }
                 }
             }
         }
