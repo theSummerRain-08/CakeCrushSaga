@@ -1,4 +1,5 @@
 using UnityEngine;
+using DG.Tweening;
 
 public class BoardManager : MonoBehaviourSingletonPersistent<BoardManager>
 {
@@ -6,7 +7,6 @@ public class BoardManager : MonoBehaviourSingletonPersistent<BoardManager>
 
     [SerializeField] public int width = 5;
     [SerializeField] public int height = 5;
-    
 
     private void Start()
     {
@@ -34,7 +34,9 @@ public class BoardManager : MonoBehaviourSingletonPersistent<BoardManager>
             
             pieceGrid[x1, y1] = piece2;
             pieceGrid[x2, y2] = piece1;
-            (piece1.transform.position, piece2.transform.position) = (piece2.transform.position, piece1.transform.position);
+            
+            piece1.transform.DOMove(piece2.transform.position, 0.5f);
+            piece2.transform.DOMove(piece1.transform.position, 0.5f);
             
             piece1.SetLocation(x2, y2);
             piece2.SetLocation(x1, y1);
