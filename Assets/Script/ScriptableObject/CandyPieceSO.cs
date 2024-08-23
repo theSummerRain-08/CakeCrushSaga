@@ -6,7 +6,7 @@ public class CandyPieceSO : ScriptableObject
 {
     [SerializeField] private CandyPieceType type;
     [SerializeField] private Sprite img;
-    
+
     public CandyPieceType Type => type;
     public Sprite Img => img;
 }
