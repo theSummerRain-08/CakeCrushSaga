@@ -19,7 +19,7 @@ public class PieceSwipe : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
 
     public void OnDrag(PointerEventData eventData)
     {
-        // Không cần xử lý trong drag nếu bạn chỉ quan tâm đến bắt đầu và kết thúc của swipe
+
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -84,7 +84,6 @@ public class PieceSwipe : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
 
     private void SwapPiece(Vector2 targetLocation)
     {
-        // Tìm piece tại targetLocation và hoán đổi vị trí với piece hiện tại
         BoardManager.Instance.SwapPieces(pieceManager.Location, targetLocation);
     }
 }
